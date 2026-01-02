@@ -1,0 +1,208 @@
+# Alan & Nora – Web + Private Portal Overview
+
+This file exists to help me (Alan) remember:
+- what systems I set up
+- what things cost
+- how to shut it ALL down if needed
+- why things are structured the way they are
+
+This is meant to protect my brain, my time, and my money.
+
+---
+
+## ⚠️ FINANCIAL & COMMITMENT CONTROL
+### If I ever want to **stop all costs completely**, here is the checklist.
+
+### 1️⃣ Cancel WordPress Hosting (Hostinger)
+This is currently the only thing that regularly costs money.
+- Log into Hostinger
+- Go to **Billing / Subscriptions**
+- Cancel the WordPress hosting plan
+- This will remove:  
+  `private.alanandnora.com` ⭐
+
+👉 Cancelling Hostinger stops ALL *paid* hosting costs.
+
+Nothing else is currently charging monthly.
+
+### 2️⃣ Domain Name Renewal
+The `alanandnora.com` domain renews annually.
+If I want to stop paying even for the domain:
+- Log into my domain registrar (Cloudflare or wherever I bought it)
+- Turn off **auto-renew**
+- Let it expire if I ever choose to
+
+👉 If I still want the name, I can just keep paying the yearly domain fee.
+
+### 3️⃣ Cloudflare
+Cloudflare is currently **free plan**.
+- If Hostinger is cancelled, Cloudflare will cost **$0**
+- I can leave Cloudflare running forever with no charge
+
+### 4️⃣ Future Storage (NOT Active Yet)
+If one day I add:
+- Cloudflare R2
+- Backblaze B2
+- AWS S3
+
+Then:
+- Those are pay-as-you-go
+- I can cancel/delete buckets any time to stop billing
+
+---
+
+## 💳 What Might Be Charging My Card?
+Right now, the potential or active charges in this project are:
+
+- Hostinger WordPress hosting  
+  → yearly prepay / discounted promo / renews higher unless cancelled  
+
+- Domain registration (`alanandnora.com`)  
+  → yearly renewal fee
+
+Cloudflare Pages = **$0**
+Cloudflare DNS = **$0**
+GitHub = **$0**
+WordPress software = **$0**
+
+📌 Future-Me Rule:
+If I ever feel overwhelmed, I can cancel Hostinger and keep only the domain + public website.  
+That returns costs to almost nothing.
+
+---
+
+## 1️⃣ Big Picture (What Exists)
+
+- **Public website**
+  - `https://alanandnora.com`
+  - simple, public face of our life
+  - hosted FREE at Cloudflare Pages
+
+- **Private family home (planned / being built)**
+  - `https://private.alanandnora.com`
+  - private login-only space
+  - powered by WordPress on Hostinger
+  - long-term emotional + memory + archive space
+
+- **DNS + edge security**
+  - managed by Cloudflare
+
+- **Future big storage (not active yet)**
+  - Cloudflare R2 or similar
+  - only when content grows huge
+
+---
+
+## 2️⃣ System Map
+
+### 🌎 Domain & DNS
+- Domain: `alanandnora.com`
+- DNS: Cloudflare
+- Purpose:
+  - Points root domain → Cloudflare Pages
+  - Points private subdomain → Hostinger
+
+---
+
+## 🌐 Public Website – alanandnora.com
+- Hosting: Cloudflare Pages
+- Source repo: `alanandnora-site`
+- Tech: static HTML + CSS
+- Deployment: commit → auto deploy
+- Cost: **$0**
+
+Purpose:
+- public, simple, beautiful
+- sharable with anyone
+
+---
+
+## 🔒 Private Portal – private.alanandnora.com
+- Hosting: Hostinger WordPress
+- Platform: WordPress
+- Access: login required
+- Future features:
+  - photos
+  - videos
+  - documents
+  - legacy writing
+- Cost:
+  - Hostinger yearly plan
+  - renews higher if I keep it
+
+Purpose:
+- Private family “home”
+- Emotional + meaningful + safe
+- Long-term memory vault
+
+---
+
+## 💰 Cost Overview (Reality-Based)
+
+### Currently Active Costs
+- Domain: ~$10–$15 / year
+- Hostinger: ~$3–$10 / month equivalent depending on promo + renewal
+
+### Cloudflare
+- DNS: free
+- Pages: free
+
+### Future Only If Needed
+- Cloudflare R2 storage:
+  - ~ $5–10 per **terabyte per month** storage
+  - bandwidth extra but reasonable
+- Only needed when I truly have LOTS of content
+
+---
+
+## 🧠 Why It’s Built This Way
+- Public site should stay lightweight and open
+- Private life deserves its own controlled space
+- Separate systems = cleaner security + less risk
+- Cloudflare gives speed + free + control
+- WordPress gives private login + emotional space
+- Storage can grow gradually
+
+---
+
+## 🧭 Growth Plan
+
+### Phase 1 – Now
+- Public site online
+- Hostinger set up
+- private.alanandnora.com WordPress installed
+- Private access only
+- Alan + Nora accounts created
+
+### Phase 2 – Fill Slowly
+- Add documents
+- Add some photos
+- Add early videos
+- Create structure
+
+### Phase 3 – When Storage Becomes Big
+- Add Cloudflare R2 or similar
+- Move large video to external storage
+- Keep WordPress as front door + permissions
+
+---
+
+## ❤️ Philosophy of This Project
+This is not a tech playground.
+It is a **family home.**
+
+- It should feel peaceful
+- Not overwhelming
+- Sustainable financially
+- Sustainable emotionally
+- Built to last decades
+
+If life changes:
+I can simplify.
+I can pause.
+I can shut it down.
+Nothing here traps me.
+
+That’s intentional.
+
+---
