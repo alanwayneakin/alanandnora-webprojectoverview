@@ -1,3 +1,117 @@
+#Alan & Nora - R2 Cloudflare storage overview
+
+
+Purpose: Create two completely separate storage spaces so different personal content areas remain independent and never mixed.
+
+1️⃣ Buckets Created
+
+Two R2 buckets are used:
+
+family-archive
+
+private-archive
+
+Both buckets:
+
+Must remain Private
+
+Are fully independent
+
+Do not share a global “All Media” view
+
+Provide emotional + contextual separation
+
+2️⃣ Recommended Folder Structure
+
+(Optional but helpful long-term)
+
+Inside family-archive
+
+/photos
+
+/videos
+
+/documents
+
+/events
+
+Inside private-archive
+
+/photos
+
+/videos
+
+/secure
+
+This ensures clarity and order as storage grows.
+
+3️⃣ Manage Access (API Token)
+
+Purpose: allow uploads (including very large files) and future automation.
+
+Steps:
+
+Go to Cloudflare R2
+
+Open Manage Access
+
+Create API Token
+
+Permissions required:
+
+Object Read
+
+Object Write
+
+Restrict token to:
+
+family-archive
+
+private-archive
+
+Save token securely
+
+No public access is enabled.
+
+4️⃣ Uploading Files
+
+Option A — Normal uploads
+
+R2 → select bucket → Upload
+
+Option B — Very large files (recommended for 4GB+)
+
+rclone
+
+or AWS CLI (R2 is S3-compatible)
+
+This avoids browser timeout limits.
+
+5️⃣ Benefits of This Design
+
+Clear separation between life areas
+
+No single “all media everywhere” view
+
+Handles huge video files easily
+
+Private by default and secure
+
+Low-cost storage that scales
+
+Safe foundation for integrating into the private website later
+
+6️⃣ Notes
+
+Nothing here is public by default
+
+Only accessible via Cloudflare account or API token
+
+Website will reference this storage later when ready
+
+Design is future-proof and long-term maintainable
+
+
 # Alan & Nora – Web + Private Portal Overview
 
 This file exists to help me (Alan) remember:
