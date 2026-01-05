@@ -1,3 +1,165 @@
+R2 Linked with private.alanandnora.com Wordpress
+WordPress → Cloudflare R2 Media Storage (Secure, Private, Signed URLs)
+
+This site uses Cloudflare R2 as external media storage for WordPress, via the Media Cloud plugin. The system is configured to keep all media fully private while still allowing WordPress to view and edit files using signed URLs.
+
+No media is publicly accessible on the internet.
+Uploads are secure, authenticated, and verifiable.
+
+Architecture
+
+WordPress hosted on Hostinger
+
+Cloudflare R2 as S3-compatible object storage
+
+Media Cloud plugin for:
+
+Upload handling
+
+Storage offload
+
+Signed URL delivery
+
+Secure admin access
+
+Status
+
+WordPress site: Healthy
+
+Media Cloud: Active & Verified
+
+R2 Integration: 100% Functional
+
+Authentication: Working (validated by test suite)
+
+Uploads: Stored directly to R2
+
+Security posture: Private storage + signed URL access
+
+Thumbnails in grid: intentionally cloud icon only (by design, for private storage)
+
+Image editing inside WordPress: Works
+
+Frontend image delivery: Uses signed URLs
+
+No public exposure of files
+
+Cloudflare R2 Configuration
+
+Bucket: private-archive
+
+Permissions: Object Read & Write
+
+Access Scope: Scoped to bucket only
+
+Endpoint format:
+
+https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+
+
+Example used:
+
+https://7503b89d83d64c4c49d7f81bfd7c6948.r2.cloudflarestorage.com
+
+
+Access Key + Secret Key created as Account API Token
+
+Bucket remains private
+
+Media Cloud Configuration
+Provider
+
+Provider: Other S3-Compatible
+
+Bucket: private-archive
+
+Region: US East (N. Virginia)
+
+Custom Endpoint: Cloudflare R2 S3 URL
+
+Path-Style Endpoints: Enabled (recommended)
+
+Upload Handling
+
+Upload Privacy ACL: Private
+
+Upload Images: Enabled
+
+Upload Videos: Enabled
+
+Upload Docs: Enabled
+
+Delete local files (optional choice, currently configurable)
+
+Secure URL Settings
+
+Signed URLs: Enabled
+
+Expiry: configurable (currently short-duration secure access)
+
+This allows:
+✔️ Private storage
+✔️ Admin access
+✔️ Secure frontend delivery
+
+Test Validation
+
+Media Cloud diagnostic suite successfully verified:
+
+Connected to storage
+
+Database integration correct
+
+File upload successful
+
+File deletion successful
+
+Only warning: "file not public" → expected behavior
+
+This is a private storage system, not a public CDN.
+
+Expected Behavior
+
+Cloud icon appears in Media Library grid view
+→ This indicates “stored remotely + private”
+→ This is normal and correct
+
+Images open and edit correctly in WordPress
+
+Files deliver via signed URLs when needed
+
+No images are “floating on the web”.
+
+Outcome
+
+This setup achieves:
+
+Secure cloud-based media offloading
+
+Zero public exposure
+
+Clean integration
+
+Reliable upload pipeline
+
+Signed URL delivery
+
+Future-compatible architecture
+
+This system is intentionally designed for privacy-first media handling rather than public CDN-style delivery.
+
+If you ever want to switch to:
+
+Public media hosting
+
+CDN delivery
+
+Public thumbnails
+
+Hybrid privacy
+
+…those can be layered on later. For now, this configuration is stable, secure, and validate
+
 #Alan & Nora - R2 Cloudflare storage overview
 
 
