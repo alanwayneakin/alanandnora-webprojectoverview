@@ -1,3 +1,35 @@
+
+
+Public site: alanandnora.com (Cloudflare Pages, static, free)
+
+Private site: private.alanandnora.com (WordPress on Hostinger)
+
+Family site: family.alanandnora.com (separate WordPress on Hostinger)
+
+Each WordPress site: separate install, database, admin
+
+DNS + edge handled by Cloudflare (nameservers never change)
+
+Media stored externally in Cloudflare R2
+
+One private R2 bucket per site (no sharing)
+
+WordPress manages structure and access
+
+R2 handles storage and delivery
+
+Media delivered only via signed, time-limited URLs
+
+No public media, no public buckets
+
+Large files uploaded directly to R2 when needed
+
+Only recurring cost: Hostinger hosting
+
+Everything can be shut down cleanly by canceling Hostinger
+
+
+
 R2 Linked with private.alanandnora.com Wordpress
 WordPress → Cloudflare R2 Media Storage (Secure, Private, Signed URLs)
 
