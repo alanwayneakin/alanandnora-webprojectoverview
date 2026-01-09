@@ -1,105 +1,171 @@
+Archive Ingest Status & Forward Plan
 
+Date: 09/01/2026
 
-Public site: alanandnora.com (Cloudflare Pages, static, free)
+Current State
 
-Private site: private.alanandnora.com (WordPress on Hostinger)
+One-time archive ingest initiated via Raspberry Pi + rclone
 
-Family site: family.alanandnora.com (separate WordPress on Hostinger)
+Source: Samsung external hard disk
 
-Each WordPress site: separate install, database, admin
+Scope: personal photos, videos, audio, full university recordings
 
-DNS + edge handled by Cloudflare (nameservers never change)
+Estimated volume: ~500 GB
+
+Destination: Cloudflare R2 object storage
+
+Method: append-only, folder structure preserved, resume-safe
+
+No deduplication or reorganization during ingest
+
+Objective: canonical, immutable personal archive
+
+Cost Awareness
+
+Storage: ~$7–8/month for ~500 GB (R2 standard)
+
+Upload: negligible one-time cost
+
+Egress: free from R2
+
+Request costs: minimal unless browsing large directories
+
+Costs depend mainly on storage tier and access patterns
+
+WordPress Integration Plan
+
+WordPress acts as archive browser, metadata layer, and access control
+
+Media remains in R2 (not in WordPress storage)
+
+Signed URLs used for secure access
+
+Content organized by year, event, category
+
+Archive remains source of truth
+
+Redundancy and meaningless data removed gradually
+
+Video Strategy
+
+Do not stream raw video directly from R2 via WordPress
+
+Two options:
+
+Cloudflare Stream (managed, optimized, predictable)
+
+Signed-URL progressive download for rare viewing
+
+Streaming is opt-in per folder
+
+Videos classified as archive-only or actively viewed
+
+Long-Term Archiving Principles
+
+Immutable base archive
+
+Organization added post-ingest
+
+Metadata lives outside media files
+
+Possible tiers: hot, warm, cold
+
+Storage class decisions revisitable
+
+Portability & Exit Strategy
+
+No proprietary formats
+
+No WordPress dependency
+
+Full export via rclone always possible
+
+WordPress can be shut down without data loss
+
+Migration targets: other object storage, NAS, offline cold storage
+
+Goal: ability to end Cloudflare, Hostinger, and WordPress cleanly
+
+Next Steps
+
+Complete ingest and verify integrity
+
+Decide video handling strategy
+
+Define storage tier usage
+
+Connect WordPress read-only
+
+Design metadata and browsing structure
+
+Begin pruning duplicates and low-value data
+
+Web & Hosting Architecture
+Sites
+
+Public: alanandnora.com (Cloudflare Pages, static, free)
+
+Private: private.alanandnora.com (WordPress on Hostinger)
+
+Family: family.alanandnora.com (separate WordPress install)
+
+Each WordPress site:
+
+Separate install, database, admin
+
+DNS handled by Cloudflare
 
 Media stored externally in Cloudflare R2
 
-One private R2 bucket per site (no sharing)
+One private R2 bucket per site
 
-WordPress manages structure and access
+Signed, time-limited URLs only
 
-R2 handles storage and delivery
-
-Media delivered only via signed, time-limited URLs
-
-No public media, no public buckets
-
-Large files uploaded directly to R2 when needed
+No public buckets, no public media
 
 Only recurring cost: Hostinger hosting
+Everything can be shut down by canceling Hostinger
 
-Everything can be shut down cleanly by canceling Hostinger
+WordPress → Cloudflare R2 Media Storage
+Status
 
+WordPress: healthy
 
+Media Cloud plugin: active and verified
 
-R2 Linked with private.alanandnora.com Wordpress
-WordPress → Cloudflare R2 Media Storage (Secure, Private, Signed URLs)
+R2 integration: fully functional
 
-This site uses Cloudflare R2 as external media storage for WordPress, via the Media Cloud plugin. The system is configured to keep all media fully private while still allowing WordPress to view and edit files using signed URLs.
+Authentication validated
 
-No media is publicly accessible on the internet.
-Uploads are secure, authenticated, and verifiable.
+Uploads stored directly in R2
+
+Signed URL delivery working
+
+No public file exposure
+
+Cloud icon in Media Library = private remote storage (expected)
 
 Architecture
 
-WordPress hosted on Hostinger
+WordPress on Hostinger
 
-Cloudflare R2 as S3-compatible object storage
+Cloudflare R2 (S3-compatible)
 
-Media Cloud plugin for:
+Media Cloud plugin handles uploads, offload, signed URLs
 
-Upload handling
-
-Storage offload
-
-Signed URL delivery
-
-Secure admin access
-
-Status
-
-WordPress site: Healthy
-
-Media Cloud: Active & Verified
-
-R2 Integration: 100% Functional
-
-Authentication: Working (validated by test suite)
-
-Uploads: Stored directly to R2
-
-Security posture: Private storage + signed URL access
-
-Thumbnails in grid: intentionally cloud icon only (by design, for private storage)
-
-Image editing inside WordPress: Works
-
-Frontend image delivery: Uses signed URLs
-
-No public exposure of files
-
-Cloudflare R2 Configuration
+R2 Configuration
 
 Bucket: private-archive
 
-Permissions: Object Read & Write
+Permissions: Object Read / Write
 
-Access Scope: Scoped to bucket only
+Scoped API token
 
-Endpoint format:
+Private bucket only
 
-https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+Endpoint: https://<ACCOUNT_ID>.r2.cloudflarestorage.com
 
-
-Example used:
-
-https://7503b89d83d64c4c49d7f81bfd7c6948.r2.cloudflarestorage.com
-
-
-Access Key + Secret Key created as Account API Token
-
-Bucket remains private
-
-Media Cloud Configuration
-Provider
+Media Cloud Settings
 
 Provider: Other S3-Compatible
 
@@ -107,410 +173,97 @@ Bucket: private-archive
 
 Region: US East (N. Virginia)
 
-Custom Endpoint: Cloudflare R2 S3 URL
+Path-style endpoints: enabled
 
-Path-Style Endpoints: Enabled (recommended)
+Uploads: images, videos, docs enabled
 
-Upload Handling
+Privacy ACL: private
 
-Upload Privacy ACL: Private
+Signed URLs: enabled (short expiry)
 
-Upload Images: Enabled
+Validation
 
-Upload Videos: Enabled
+Upload, delete, database integration verified
 
-Upload Docs: Enabled
+Warning “file not public” = expected
 
-Delete local files (optional choice, currently configurable)
+Frontend delivery uses signed URLs only
 
-Secure URL Settings
+Outcome: privacy-first, secure, future-compatible media handling
 
-Signed URLs: Enabled
-
-Expiry: configurable (currently short-duration secure access)
-
-This allows:
-✔️ Private storage
-✔️ Admin access
-✔️ Secure frontend delivery
-
-Test Validation
-
-Media Cloud diagnostic suite successfully verified:
-
-Connected to storage
-
-Database integration correct
-
-File upload successful
-
-File deletion successful
-
-Only warning: "file not public" → expected behavior
-
-This is a private storage system, not a public CDN.
-
-Expected Behavior
-
-Cloud icon appears in Media Library grid view
-→ This indicates “stored remotely + private”
-→ This is normal and correct
-
-Images open and edit correctly in WordPress
-
-Files deliver via signed URLs when needed
-
-No images are “floating on the web”.
-
-Outcome
-
-This setup achieves:
-
-Secure cloud-based media offloading
-
-Zero public exposure
-
-Clean integration
-
-Reliable upload pipeline
-
-Signed URL delivery
-
-Future-compatible architecture
-
-This system is intentionally designed for privacy-first media handling rather than public CDN-style delivery.
-
-If you ever want to switch to:
-
-Public media hosting
-
-CDN delivery
-
-Public thumbnails
-
-Hybrid privacy
-
-…those can be layered on later. For now, this configuration is stable, secure, and validate
-
-#Alan & Nora - R2 Cloudflare storage overview
-
-
-Purpose: Create two completely separate storage spaces so different personal content areas remain independent and never mixed.
-
-1️⃣ Buckets Created
-
-Two R2 buckets are used:
+R2 Storage Separation Overview
+Buckets
 
 family-archive
 
 private-archive
 
-Both buckets:
+Both:
 
-Must remain Private
+Fully private
 
-Are fully independent
+Independent
 
-Do not share a global “All Media” view
+No shared media views
 
-Provide emotional + contextual separation
-
-2️⃣ Recommended Folder Structure
-
-(Optional but helpful long-term)
-
-Inside family-archive
+Suggested Structure (Optional)
 
 /photos
-
 /videos
-
 /documents
-
 /events
-
-Inside private-archive
-
-/photos
-
-/videos
-
 /secure
 
-This ensures clarity and order as storage grows.
+Access
 
-3️⃣ Manage Access (API Token)
+Scoped API token
 
-Purpose: allow uploads (including very large files) and future automation.
+Object Read + Write only
 
-Steps:
+No public access
 
-Go to Cloudflare R2
+Upload Methods
 
-Open Manage Access
+Browser upload for small files
 
-Create API Token
+rclone / AWS CLI for large files
 
-Permissions required:
+Benefits:
 
-Object Read
+Clear separation
 
-Object Write
+Handles large media
 
-Restrict token to:
+Private by default
 
-family-archive
+Low cost, scalable, future-proof
 
-private-archive
+Cost & Shutdown Reference (For Future Me)
 
-Save token securely
+Active costs:
 
-No public access is enabled.
+Domain: ~$10–15/year
 
-4️⃣ Uploading Files
+Hostinger WordPress: promo-based, higher on renewal
 
-Option A — Normal uploads
+Free:
 
-R2 → select bucket → Upload
+Cloudflare DNS
 
-Option B — Very large files (recommended for 4GB+)
+Cloudflare Pages
 
-rclone
+GitHub
 
-or AWS CLI (R2 is S3-compatible)
+WordPress software
 
-This avoids browser timeout limits.
+To stop all recurring costs:
 
-5️⃣ Benefits of This Design
+Cancel Hostinger WordPress plan
 
-Clear separation between life areas
+Disable domain auto-renew if desired
 
-No single “all media everywhere” view
+Cloudflare free plan can remain indefinitely
 
-Handles huge video files easily
-
-Private by default and secure
-
-Low-cost storage that scales
-
-Safe foundation for integrating into the private website later
-
-6️⃣ Notes
-
-Nothing here is public by default
-
-Only accessible via Cloudflare account or API token
-
-Website will reference this storage later when ready
-
-Design is future-proof and long-term maintainable
-
-
-# Alan & Nora – Web + Private Portal Overview
-
-This file exists to help me (Alan) remember:
-- what systems I set up
-- what things cost
-- how to shut it ALL down if needed
-- why things are structured the way they are
-
-This is meant to protect my brain, my time, and my money.
-
----
-
-## ⚠️ FINANCIAL & COMMITMENT CONTROL
-### If I ever want to **stop all costs completely**, here is the checklist.
-
-### 1️⃣ Cancel WordPress Hosting (Hostinger)
-This is currently the only thing that regularly costs money.
-- Log into Hostinger
-- Go to **Billing / Subscriptions**
-- Cancel the WordPress hosting plan
-- This will remove:  
-  `private.alanandnora.com` ⭐
-
-👉 Cancelling Hostinger stops ALL *paid* hosting costs.
-
-Nothing else is currently charging monthly.
-
-### 2️⃣ Domain Name Renewal
-The `alanandnora.com` domain renews annually.
-If I want to stop paying even for the domain:
-- Log into my domain registrar (Cloudflare or wherever I bought it)
-- Turn off **auto-renew**
-- Let it expire if I ever choose to
-
-👉 If I still want the name, I can just keep paying the yearly domain fee.
-
-### 3️⃣ Cloudflare
-Cloudflare is currently **free plan**.
-- If Hostinger is cancelled, Cloudflare will cost **$0**
-- I can leave Cloudflare running forever with no charge
-
-### 4️⃣ Future Storage (NOT Active Yet)
-If one day I add:
-- Cloudflare R2
-- Backblaze B2
-- AWS S3
-
-Then:
-- Those are pay-as-you-go
-- I can cancel/delete buckets any time to stop billing
-
----
-
-## 💳 What Might Be Charging My Card?
-Right now, the potential or active charges in this project are:
-
-- Hostinger WordPress hosting  
-  → yearly prepay / discounted promo / renews higher unless cancelled  
-
-- Domain registration (`alanandnora.com`)  
-  → yearly renewal fee
-
-Cloudflare Pages = **$0**
-Cloudflare DNS = **$0**
-GitHub = **$0**
-WordPress software = **$0**
-
-📌 Future-Me Rule:
-If I ever feel overwhelmed, I can cancel Hostinger and keep only the domain + public website.  
-That returns costs to almost nothing.
-
----
-
-## 1️⃣ Big Picture (What Exists)
-
-- **Public website**
-  - `https://alanandnora.com`
-  - simple, public face of our life
-  - hosted FREE at Cloudflare Pages
-
-- **Private family home (planned / being built)**
-  - `https://private.alanandnora.com`
-  - private login-only space
-  - powered by WordPress on Hostinger
-  - long-term emotional + memory + archive space
-
-- **DNS + edge security**
-  - managed by Cloudflare
-
-- **Future big storage (not active yet)**
-  - Cloudflare R2 or similar
-  - only when content grows huge
-
----
-
-## 2️⃣ System Map
-
-### 🌎 Domain & DNS
-- Domain: `alanandnora.com`
-- DNS: Cloudflare
-- Purpose:
-  - Points root domain → Cloudflare Pages
-  - Points private subdomain → Hostinger
-
----
-
-## 🌐 Public Website – alanandnora.com
-- Hosting: Cloudflare Pages
-- Source repo: `alanandnora-site`
-- Tech: static HTML + CSS
-- Deployment: commit → auto deploy
-- Cost: **$0**
-
-Purpose:
-- public, simple, beautiful
-- sharable with anyone
-
----
-
-## 🔒 Private Portal – private.alanandnora.com
-- Hosting: Hostinger WordPress
-- Platform: WordPress
-- Access: login required
-- Future features:
-  - photos
-  - videos
-  - documents
-  - legacy writing
-- Cost:
-  - Hostinger yearly plan
-  - renews higher if I keep it
-
-Purpose:
-- Private family “home”
-- Emotional + meaningful + safe
-- Long-term memory vault
-
----
-
-## 💰 Cost Overview (Reality-Based)
-
-### Currently Active Costs
-- Domain: ~$10–$15 / year
-- Hostinger: ~$3–$10 / month equivalent depending on promo + renewal
-
-### Cloudflare
-- DNS: free
-- Pages: free
-
-### Future Only If Needed
-- Cloudflare R2 storage:
-  - ~ $5–10 per **terabyte per month** storage
-  - bandwidth extra but reasonable
-- Only needed when I truly have LOTS of content
-
----
-
-## 🧠 Why It’s Built This Way
-- Public site should stay lightweight and open
-- Private life deserves its own controlled space
-- Separate systems = cleaner security + less risk
-- Cloudflare gives speed + free + control
-- WordPress gives private login + emotional space
-- Storage can grow gradually
-
----
-
-## 🧭 Growth Plan
-
-### Phase 1 – Now
-- Public site online
-- Hostinger set up
-- private.alanandnora.com WordPress installed
-- Private access only
-- Alan + Nora accounts created
-
-### Phase 2 – Fill Slowly
-- Add documents
-- Add some photos
-- Add early videos
-- Create structure
-
-### Phase 3 – When Storage Becomes Big
-- Add Cloudflare R2 or similar
-- Move large video to external storage
-- Keep WordPress as front door + permissions
-
----
-
-## ❤️ Philosophy of This Project
-This is not a tech playground.
-It is a **family home.**
-
-- It should feel peaceful
-- Not overwhelming
-- Sustainable financially
-- Sustainable emotionally
-- Built to last decades
-
-If life changes:
-I can simplify.
-I can pause.
-I can shut it down.
-Nothing here traps me.
-
-That’s intentional.
-
----
+Purpose: clarity, sustainability, and long-term control
+Principle: nothing here traps me
+Result: private, calm, portable family archive built to last
